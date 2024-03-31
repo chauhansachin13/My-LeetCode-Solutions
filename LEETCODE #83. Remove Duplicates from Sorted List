@@ -1,0 +1,66 @@
+// Solution 1: 
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+ListNode ptr=head;
+ListNode temp;
+if(head==null)
+return head;
+
+
+while(ptr.next!=null)
+{
+
+   if( ptr.val==ptr.next.val)
+{
+temp=ptr;
+
+   while(ptr.next!=null && ptr.val==ptr.next.val )
+      ptr=ptr.next;
+
+      temp.next=ptr.next;
+
+}
+else 
+ptr=ptr.next;
+
+
+
+
+
+   
+}
+
+
+return head;
+    }
+}
+
+
+
+// Solution 2: 
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+
+        ListNode orig = head;
+        ListNode newHead = null;
+        ListNode temp = head;
+
+        while(orig != null) {
+            while(orig.next != null && orig.val== orig.next.val) {
+                orig = orig.next;
+            }
+            if(newHead == null) {
+                newHead = temp = orig;
+            } else {
+                temp.next = orig;
+                temp = orig;
+            }
+            orig = orig.next;
+        }
+        return newHead;
+    
+    }
+}
