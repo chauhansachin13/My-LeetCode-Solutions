@@ -16,7 +16,7 @@ ListNode Next=head;
 ListNode Current=head;
  
 
-while(temp1!=null)
+while(Current!=null)
 {
     Current=Next.next;
     Next.next=Prev;
