@@ -1,65 +1,52 @@
-
-
-# ***// SOLUTION 1:***
+//# *SOLUTION 1*
 
 class Solution {
     public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
 
-ListNode Prev=null;
-ListNode Next=head;
-ListNode Current=head;
- 
+        ListNode Prev = null;
+        ListNode Current = head;
+        ListNode Next = head.next;
 
-while(Current!=null)
-{
-    Current=Next.next;
-    Next.next=Prev;
-    Prev=Next;
-    Next=Current;
+        while (Current != null) {
+            Next = Current.next;
 
+            Current.next = Prev;
 
-}
+            Prev = Current;
 
+            Current = Next;
 
-head=Prev;
-return head;
+        }
 
+        head = Prev;
+        return head;
 
     }
 }
 
 
-# ***// SOLUTION 2:***
+//# *SOLUTION 2*
+
 
 class Solution {
     public ListNode reverseList(ListNode head) {
-if(head==null || head.next==null)
-return head;
 
+        ListNode Prev = null;
+        ListNode Next = head;
+        ListNode Current = head;
 
-ListNode Prev=null;
-ListNode Current=head;
-ListNode Next=head.next;
- 
+        while (Current != null) {
+            Current = Next.next;
+            Next.next = Prev;
+            Prev = Next;
+            Next = Current;
 
-while(Current!=null)
-{
-    Next=Current.next;
+        }
 
-    Current.next=Prev;
- 
-    Prev=Current;
-
-    Current=Next;
-
-}
-
-
-head=Prev;
-return head;
-
+        head = Prev;
+        return head;
 
     }
 }
-
-```
