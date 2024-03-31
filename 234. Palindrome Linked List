@@ -1,0 +1,58 @@
+
+class Solution {
+
+    public ListNode reverseList(ListNode head) {
+
+        ListNode Prev = null;
+        ListNode Next = head;
+        ListNode temp1 = head;
+
+        while (temp1 != null) {
+            temp1 = Next.next;
+            Next.next = Prev;
+            Prev = Next;
+            Next = temp1;
+
+        }
+
+        return Prev;
+
+    }
+
+    public static ListNode CopyList(ListNode head) {
+
+        ListNode newhead = new ListNode(head.val);
+
+        ListNode ptr1 = head.next;
+        ListNode ptr2 = newhead;
+
+        while (ptr1 != null) {
+            ListNode newnode = new ListNode(ptr1.val);
+            ptr2.next = newnode;
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+        return newhead;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+
+        ListNode newh = CopyList(head);
+
+        head = reverseList(head);
+
+        ListNode ptr1 = head;
+        ListNode ptr2 = newh;
+        while (ptr1 != null) {
+            if (ptr1.val != ptr2.val)
+                return false;
+
+            else {
+                ptr1 = ptr1.next;
+                ptr2 = ptr2.next;
+            }
+
+        }
+        return true;
+    }
+}
