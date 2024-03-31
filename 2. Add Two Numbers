@@ -1,0 +1,86 @@
+
+class Solution {
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int diff = 0;
+        ListNode ptr1 = l1;
+        int c1 = 1;
+        while (ptr1.next != null) {
+            c1++;
+            ptr1 = ptr1.next;
+
+        }
+
+        ListNode ptr2 = l2;
+        int c2 = 1;
+
+        while (ptr2.next != null) {
+            c2++;
+            ptr2 = ptr2.next;
+
+        }
+
+        if (c1 < c2) {
+            diff = c2 - c1;
+
+            while (diff != 0) {
+                ListNode New = new ListNode(0);
+                ptr1.next = New;
+                ptr1 = New;
+                diff--;
+
+            }
+
+        } else if (c2 < c1) {
+            diff = c1 - c2;
+
+            while (diff != 0) {
+                ListNode New = new ListNode(0);
+                ptr2.next = New;
+                ptr2 = New;
+                diff--;
+
+            }
+
+        } else if (c1 == c2) {
+            diff = 0;
+        }
+
+        ListNode rev1 = l1;
+        ListNode rev2 = l2;
+
+        int sum = 0;
+
+        ListNode head = new ListNode((rev1.val + rev2.val) % 10);
+        int carry = (rev1.val + rev2.val) / 10;
+        ListNode t = head;
+        ptr1 = rev1.next;
+        ptr2 = rev2.next;
+        while (ptr1 != null && ptr2 != null) {
+
+            sum = 0;
+            sum = ptr1.val + ptr2.val + carry;
+
+            ListNode N = new ListNode(sum % 10);
+            carry = sum / 10;
+            t.next = N;
+            t = N;
+
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+
+        }
+
+        while (carry != 0) {
+
+            ListNode N = new ListNode(carry % 10);
+            carry = carry / 10;
+            t.next = N;
+            t = N;
+
+        }
+
+        return (head);
+
+    }
+}
