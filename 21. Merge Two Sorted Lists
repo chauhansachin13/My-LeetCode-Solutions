@@ -1,0 +1,75 @@
+
+
+# Java Code
+```
+public class Solution {
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+
+        ListNode ptr1 = l1;
+        ListNode ptr2 = l2;
+        ListNode head = null;
+        ListNode temp = null;
+        ListNode newnode = null;
+
+        while (ptr1 != null && ptr2 != null) {
+
+            if (ptr1.val <= ptr2.val) {
+                newnode = new ListNode(ptr1.val);
+
+                ptr1 = ptr1.next;
+            }
+
+            else if (ptr2.val < ptr1.val) {
+
+                newnode = new ListNode(ptr2.val);
+
+                ptr2 = ptr2.next;
+            }
+
+            if (head == null) {
+                head = temp = newnode;
+
+            } else {
+                temp.next = newnode;
+                temp = newnode;
+            }
+        }
+
+
+
+        while (ptr1 != null) {
+            newnode = new ListNode(ptr1.val);
+
+            if (head == null) {
+                head = temp = newnode;
+
+            } else {
+                temp.next = newnode;
+                temp = newnode;
+            }
+            ptr1 = ptr1.next;
+
+        }
+
+
+
+        while (ptr2 != null) {
+            newnode = new ListNode(ptr2.val);
+
+            if (head == null) {
+                head = temp = newnode;
+
+            } else {
+                temp.next = newnode;
+                temp = newnode;
+            }
+            ptr2 = ptr2.next;
+
+        }
+
+        return head;
+    }
+
+}
+
+```
