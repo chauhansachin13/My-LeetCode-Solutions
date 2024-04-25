@@ -1,0 +1,75 @@
+
+                                                                          Redundant Braces
+
+Problem Statement
+Given valid mathematical expressions in the form of a string. You are to return true if the given expression contains a pair of redundant brackets, else return false.
+The given string only contains ‘(‘, ’)’, ‘+’, ‘-’, ‘*’, ‘/’ and lowercase English letters.
+
+Example 1:
+Input:
+
+A = "((a+b))"
+
+Output:
+
+true
+
+Explanation:
+
+There is no need for an additional bracket around the expression (a+b) hence it has one set of redundant brackets
+
+Example 2:
+Input:
+
+A = "(a+(a+b))"
+
+Output:
+
+false
+
+
+
+---------------------------------------------------------------------------------CODE----------------------------------------------------------------------------------------
+import java.util.*;
+
+public class Solution {
+    public boolean hasRedundantBraces(String s) {
+      
+        Stack<Character> st = new Stack<>();
+        String str = s;
+
+        int i = 0;
+
+        while (i < str.length()) {
+boolean flag=true;
+            char ch = str.charAt(i);
+
+            if (ch!=')')
+                st.push(ch);
+
+            if (ch == ')' ) {
+
+                // char c = st.pop();
+
+                while(st.peek() != '(')
+                {
+                    if(st.peek()=='+' || st.peek()=='-' || st.peek()=='*' || st.peek()=='/' )
+
+flag=false;
+
+st.pop();
+
+                }
+                st.pop();
+
+                if(flag==true)
+                return true;   
+            }
+
+            i++;
+        }
+
+        return false;
+
+    }
+}
