@@ -1,0 +1,47 @@
+// METHOD 1 BY ARRAYLIST
+
+class StockSpanner {
+
+    ArrayList<Integer> al = new ArrayList<>();
+
+    public StockSpanner() {
+
+    }
+
+    public int next(int price) {
+        int ctr = 1;
+
+        al.add(price);
+
+        if (al.size() == 1)
+            return 1;
+
+        for (int i = al.size() - 1; i > 0; i--) {
+            if (al.get(i - 1) > price)
+                return 1;
+
+            if (al.get(i - 1) <= price) {
+                ctr = 0;
+                while (i >= 0 && al.get(i) <= price) {
+                    ctr++;
+
+                    i--;
+                }
+                return ctr;
+
+            }
+
+        }
+        return ctr;
+    }
+
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
+
+
+ // METHOD 2 BY STACK
