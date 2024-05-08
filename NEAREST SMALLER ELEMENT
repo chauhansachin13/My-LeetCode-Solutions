@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Solution {
+    public static ArrayList<Integer> prevSmaller(ArrayList<Integer> A) {
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        Stack<Integer> st = new Stack<Integer>();
+
+        al.add(-1);
+        st.add(0);
+
+        if (A.size() == 1)
+            return al;
+
+        for (int i = 1; i < A.size(); i++) {
+            while (!st.isEmpty() && A.get(i) <= A.get(st.peek())) {
+                st.pop();
+            }
+
+            if (st.isEmpty()) {
+                al.add(-1);
+                st.add(i);
+                continue;
+            } else {
+                al.add(A.get(st.peek()));
+                st.add(i);
+                continue;
+            }
+        }
+
+        return al;
+    }
+}
