@@ -1,19 +1,18 @@
-### 1. **Brute Force Approach**
+1. Brute Force Approach
+Intuition:
 
-**Intuition**:
-- The brute-force method involves generating all possible permutations of one string and checking if any of these permutations match the other string. Although this approach is highly inefficient, it guarantees finding the correct solution.
+The brute-force method involves generating all possible permutations of one string and checking if any of these permutations match the other string. Although this approach is highly inefficient, it guarantees finding the correct solution.
+Approach:
 
-**Approach**:
-- Generate all permutations of string `s`.
-- Compare each permutation with string `t`.
-- If any permutation matches `t`, then `t` is an anagram of `s`.
+Generate all permutations of string s.
+Compare each permutation with string t.
+If any permutation matches t, then t is an anagram of s.
+Complexity:
 
-**Complexity**:
-- **Time Complexity**: O(n!) - Generating permutations has a factorial time complexity, where `n` is the length of the string.
-- **Space Complexity**: O(n) - Required for storing the permutations and during the recursive calls.
+Time Complexity: O(n!) - Generating permutations has a factorial time complexity, where n is the length of the string.
+Space Complexity: O(n) - Required for storing the permutations and during the recursive calls.
+Code:
 
-**Code**:
-```java
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,26 +59,21 @@ class Solution {
         arr[j] = temp;
     }
 }
-```
+2. Sorting Approach
+Intuition:
 
----
+If two strings are anagrams, sorting both strings should result in identical strings. By comparing the sorted versions, we can determine if the original strings are anagrams.
+Approach:
 
-### 2. **Sorting Approach**
+Convert both strings to character arrays.
+Sort both arrays.
+Compare the sorted arrays to check if they are identical.
+Complexity:
 
-**Intuition**:
-- If two strings are anagrams, sorting both strings should result in identical strings. By comparing the sorted versions, we can determine if the original strings are anagrams.
+Time Complexity: O(n log n) - Sorting takes O(n log n) time.
+Space Complexity: O(n) - Space is required for the sorted arrays.
+Code:
 
-**Approach**:
-- Convert both strings to character arrays.
-- Sort both arrays.
-- Compare the sorted arrays to check if they are identical.
-
-**Complexity**:
-- **Time Complexity**: O(n log n) - Sorting takes O(n log n) time.
-- **Space Complexity**: O(n) - Space is required for the sorted arrays.
-
-**Code**:
-```java
 import java.util.Arrays;
 
 class Solution {
@@ -99,25 +93,20 @@ class Solution {
         return Arrays.equals(sArray, tArray);
     }
 }
-```
+3. HashMap Frequency Count Approach
+Intuition:
 
----
+An anagram must have the same frequency of each character in both strings. By counting the occurrences of each character in both strings and comparing the counts, we can determine if the strings are anagrams.
+Approach:
 
-### 3. **HashMap Frequency Count Approach**
+Use a HashMap to count the frequency of each character in both strings.
+Compare the frequency maps of both strings.
+Complexity:
 
-**Intuition**:
-- An anagram must have the same frequency of each character in both strings. By counting the occurrences of each character in both strings and comparing the counts, we can determine if the strings are anagrams.
+Time Complexity: O(n) - Counting frequencies and comparing the maps both take O(n) time.
+Space Complexity: O(n) - Space is required to store the frequency maps.
+Code:
 
-**Approach**:
-- Use a `HashMap` to count the frequency of each character in both strings.
-- Compare the frequency maps of both strings.
-
-**Complexity**:
-- **Time Complexity**: O(n) - Counting frequencies and comparing the maps both take O(n) time.
-- **Space Complexity**: O(n) - Space is required to store the frequency maps.
-
-**Code**:
-```java
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,26 +133,21 @@ class Solution {
         return sMap.equals(tMap);
     }
 }
-```
+4. Frequency Array (Optimized Approach)
+Intuition:
 
----
+Since the strings consist only of lowercase English letters, we can use an array of size 26 to track the frequency of each character. If the arrays for both strings are identical, the strings are anagrams.
+Approach:
 
-### 4. **Frequency Array (Optimized Approach)**
+Create an array of size 26 to store the frequency of each character.
+Increment the count for characters in s and decrement for characters in t.
+If the array is filled with zeros at the end, the strings are anagrams.
+Complexity:
 
-**Intuition**:
-- Since the strings consist only of lowercase English letters, we can use an array of size 26 to track the frequency of each character. If the arrays for both strings are identical, the strings are anagrams.
+Time Complexity: O(n) - A single pass through the strings is needed.
+Space Complexity: O(1) - Only a fixed-size array of 26 elements is used.
+Code:
 
-**Approach**:
-- Create an array of size 26 to store the frequency of each character.
-- Increment the count for characters in `s` and decrement for characters in `t`.
-- If the array is filled with zeros at the end, the strings are anagrams.
-
-**Complexity**:
-- **Time Complexity**: O(n) - A single pass through the strings is needed.
-- **Space Complexity**: O(1) - Only a fixed-size array of 26 elements is used.
-
-**Code**:
-```java
 class Solution {
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) {
@@ -188,8 +172,4 @@ class Solution {
         return true;
     }
 }
-```
-
----
-
 Each of these methods offers a different way to solve the problem, with varying degrees of efficiency. The frequency array method is generally the most efficient and is recommended for this problem.
