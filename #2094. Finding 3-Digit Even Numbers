@@ -1,0 +1,272 @@
+Approach 1: Brute Force
+Intuition:
+
+Generate all possible combinations of three digits.
+Check if each combination is a valid number (i.e., does not start with zero and is even).
+Approach:
+
+Use three nested loops to generate all possible three-digit combinations.
+For each combination, ensure that the number is even and does not start with zero.
+Use a Set to store unique numbers.
+Convert the set to a sorted array.
+Complexity:
+
+Time Complexity: (O(n^3)) where (n) is the number of digits (due to the three nested loops).
+Space Complexity: (O(k)), where (k) is the number of unique valid numbers.
+Code:
+
+import java.util.*;
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        int n = digits.length;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    if (i != j && j != k && i != k) {
+                        int num = digits[i] * 100 + digits[j] * 10 + digits[k];
+                        if (digits[k] % 2 == 0 && digits[i] != 0) {
+                            uniqueNumbers.add(num);
+                        }
+                    }
+                }
+            }
+        }
+        
+        int[] result = uniqueNumbers.stream().mapToInt(Integer::intValue).sorted().toArray();
+        return result;
+    }
+}
+Approach 2: Frequency Counting and Combination
+Intuition:
+
+Count the frequency of each digit.
+Use the counts to generate combinations of three digits that form valid numbers.
+Approach:
+
+Count the occurrences of each digit.
+For each even digit as the last digit, generate all combinations of the remaining two digits.
+Ensure no leading zeros and that the number is unique.
+Use a Set to store unique numbers.
+Convert the set to a sorted array.
+Complexity:
+
+Time Complexity: (O(1)) for generating combinations, as the number of digits is fixed (0-9).
+Space Complexity: (O(k)), where (k) is the number of unique valid numbers.
+Code:
+
+import java.util.*;
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        int[] count = new int[10];
+        
+        for (int digit : digits) {
+            count[digit]++;
+        }
+        
+        for (int lastDigit = 0; lastDigit < 10; lastDigit += 2) {
+            if (count[lastDigit] > 0) {
+                count[lastDigit]--;
+                
+                for (int i = 0; i < 10; i++) {
+                    if (count[i] > 0) {
+                        for (int j = 0; j < 10; j++) {
+                            if (i != j && count[j] > 0) {
+                                int num = i * 100 + j * 10 + lastDigit;
+                                if (i != 0) {
+                                    uniqueNumbers.add(num);
+                                }
+                            } else if (i == j && count[j] > 1) {
+                                int num = i * 100 + j * 10 + lastDigit;
+                                if (i != 0) {
+                                    uniqueNumbers.add(num);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                count[lastDigit]++;
+            }
+        }
+        
+        int[] result = uniqueNumbers.stream().mapToInt(Integer::intValue).sorted().toArray();
+        return result;
+    }
+}
+Approach 3: Permutation Generation with Constraints
+Intuition:
+
+Generate all permutations of three digits and filter based on constraints.
+Approach:
+
+Use permutations to generate all possible three-digit numbers.
+Filter permutations to ensure the number is even and does not start with zero.
+Use a Set to store unique numbers.
+Convert the set to a sorted array.
+Complexity:
+
+Time Complexity: (O(n!)) for generating permutations (with (n) being the number of digits), and additional filtering.
+Space Complexity: (O(k)), where (k) is the number of unique valid numbers.
+Code:
+
+import java.util.*;
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        List<Integer> digitList = new ArrayList<>();
+        for (int digit : digits) {
+            digitList.add(digit);
+        }
+        
+        Collections.sort(digitList);
+        permute(digitList, new ArrayList<>(), uniqueNumbers);
+        
+        int[] result = uniqueNumbers.stream().mapToInt(Integer::intValue).sorted().toArray();
+        return result;
+    }
+    
+    private void permute(List<Integer> digits, List<Integer> tempList, Set<Integer> uniqueNumbers) {
+        if (tempList.size() == 3) {
+            int num = tempList.get(0) * 100 + tempList.get(1) * 10 + tempList.get(2);
+            if (tempList.get(2) % 2 == 0 && tempList.get(0) != 0) {
+                uniqueNumbers.add(num);
+            }
+            return;
+        }
+        
+        for (int i = 0; i < digits.size(); i++) {
+            if (i > 0 && digits.get(i).equals(digits.get(i - 1))) continue; // Skip duplicates
+            tempList.add(digits.get(i));
+            permute(digits, tempList, uniqueNumbers);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+Approach 4: Combination and Permutation with Backtracking
+Intuition:
+
+Use backtracking to generate valid three-digit numbers while ensuring constraints are met.
+Approach:
+
+Use a backtracking algorithm to generate all combinations of three digits.
+Filter combinations to ensure the number is even and does not start with zero.
+Use a Set to store unique numbers.
+Convert the set to a sorted array.
+Complexity:
+
+Time Complexity: Similar to permutation-based approaches, approximately (O(n^3)) in practical cases.
+Space Complexity: (O(k)), where (k) is the number of unique valid numbers.
+Code:
+
+import java.util.*;
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        backtrack(digits, new boolean[digits.length], new ArrayList<>(), uniqueNumbers);
+        
+        int[] result = uniqueNumbers.stream().mapToInt(Integer::intValue).sorted().toArray();
+        return result;
+    }
+    
+    private void backtrack(int[] digits, boolean[] used, List<Integer> tempList, Set<Integer> uniqueNumbers) {
+        if (tempList.size() == 3) {
+            int num = tempList.get(0) * 100 + tempList.get(1) * 10 + tempList.get(2);
+            if (tempList.get(2) % 2 == 0 && tempList.get(0) != 0) {
+                uniqueNumbers.add(num);
+            }
+            return;
+        }
+        
+        for (int i = 0; i < digits.length; i++) {
+            if (used[i]) continue;
+            used[i] = true;
+            tempList.add(digits[i]);
+            backtrack(digits, used, tempList, uniqueNumbers);
+            tempList.remove(tempList.size() - 1);
+            used[i] = false;
+        }
+    }
+}
+Approach 5: Hashing with Frequency Counts
+Intuition:
+
+Utilize a hash set to track unique three-digit numbers and ensure constraints are met.
+Use digit frequency counts to generate possible combinations and validate them.
+Approach:
+
+Frequency Counting: Count the occurrences of each digit using a hash map.
+Generate Combinations:
+For each possible last digit (must be even), generate combinations of the remaining two digits.
+Use a hash set to avoid duplicates and ensure constraints (no leading zeros, number must be even) are met.
+Return Result:
+Convert the hash set to a sorted array and return.
+Complexity:
+
+Time Complexity: (O(1)) for generating combinations due to the fixed number of digits (0-9). Checking and adding to the hash set is (O(1)) on average.
+Space Complexity: (O(k)), where (k) is the number of unique valid numbers. The hash set and result array both contribute to this complexity.
+Code:
+
+import java.util.*;
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        int[] count = new int[10];
+        
+        // Count the frequency of each digit
+        for (int digit : digits) {
+            count[digit]++;
+        }
+        
+        // Iterate over all possible even digits for the last position
+        for (int lastDigit = 0; lastDigit < 10; lastDigit += 2) {
+            if (count[lastDigit] > 0) {
+                // Decrease the count of lastDigit to use it
+                count[lastDigit]--;
+                
+                // Generate all combinations of the remaining digits
+                for (int i = 0; i < 10; i++) {
+                    if (count[i] > 0) {
+                        for (int j = 0; j < 10; j++) {
+                            if (i != j && count[j] > 0) {
+                                int num = i * 100 + j * 10 + lastDigit;
+                                if (i != 0) { // Ensure no leading zeros
+                                    uniqueNumbers.add(num);
+                                }
+                            } else if (i == j && count[j] > 1) {
+                                int num = i * 100 + j * 10 + lastDigit;
+                                if (i != 0) { // Ensure no leading zeros
+                                    uniqueNumbers.add(num);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                // Restore the count of lastDigit
+                count[lastDigit]++;
+            }
+        }
+        
+        // Convert the set to a sorted array
+        int[] result = uniqueNumbers.stream().mapToInt(Integer::intValue).sorted().toArray();
+        return result;
+    }
+}
+Summary of Approaches
+Brute Force: Directly generates all combinations using nested loops. Simple but inefficient for larger inputs.
+
+Frequency Counting and Combination: Utilizes digit frequency to efficiently generate valid numbers and ensure uniqueness.
+
+Permutation Generation: Uses permutations to generate all possible numbers and filter valid ones. Can be complex and less efficient for larger inputs.
+
+Backtracking: Generates combinations using a recursive approach, ensuring constraints are met. Flexible but can be complex.
+
+Hashing with Frequency Counts: Utilizes a hash set to track unique numbers while using frequency counts to efficiently generate valid combinations. Balanced in terms of complexity and efficiency.
