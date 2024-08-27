@@ -1,0 +1,21 @@
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int maximumNumberOfStringPairs(String[] words) {
+        Set<String> seen = new HashSet<>();
+        int pairs = 0;
+        
+        for (String word : words) {
+            String reversedWord = new StringBuilder(word).reverse().toString();
+            if (seen.contains(reversedWord)) {
+                pairs++;
+                seen.remove(reversedWord); // Remove it to ensure it's only paired once
+            } else {
+                seen.add(word);
+            }
+        }
+        
+        return pairs;
+    }
+}
