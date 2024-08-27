@@ -1,0 +1,116 @@
+Problem Statement
+Given an array of integers arr, return true if the number of occurrences of each value in the array is unique. Otherwise, return false.
+
+Method 1: Using HashMap and HashSet
+Intuition:
+
+Use a HashMap to count the occurrences of each number in the array.
+Use a HashSet to track if any of these counts are repeated.
+Approach:
+
+Count the occurrences of each number using a HashMap.
+Add these counts to a HashSet and check if any count is already in the set.
+Complexity:
+
+Time complexity: (O(n)), where (n) is the length of the array. This is because each element is processed once to update the count and once to check uniqueness.
+Space complexity: (O(n)), for storing counts in the HashMap and the HashSet.
+Code:
+
+import java.util.HashMap;
+import java.util.HashSet;
+
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        // Step 1: Create a HashMap to count occurrences
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+        
+        // Count occurrences of each number
+        for (int num : arr) {
+            if (countMap.containsKey(num)) {
+                // Increment the count if the number is already in the map
+                int currentCount = countMap.get(num);
+                countMap.put(num, currentCount + 1);
+            } else {
+                // Initialize the count if the number is not in the map
+                countMap.put(num, 1);
+            }
+        }
+        
+        // Step 2: Create a HashSet to track unique counts
+        HashSet<Integer> countSet = new HashSet<>();
+        
+        // Check if all counts are unique
+        for (int count : countMap.values()) {
+            if (countSet.contains(count)) {
+                return false; // Count is not unique
+            }
+            countSet.add(count);
+        }
+        
+        // All counts were unique
+        return true;
+    }
+}
+Method 2: Using Arrays and Basic Iteration
+Intuition:
+
+Use an array to count occurrences (if values are within a certain range) and then check if any count repeats.
+Approach:
+
+Use an array or other simple data structure to count occurrences.
+Iterate through these counts to ensure all are unique.
+Complexity:
+
+Time complexity: (O(n)), as the array is processed linearly.
+Space complexity: Depends on the range of numbers but can be (O(n)) in worst-case scenarios.
+Code:
+This method assumes that the values in the array are within a small range. It is generally less flexible and not shown here due to constraints on practical value ranges and array size.
+
+Method 3: Sorting and Checking
+Intuition:
+
+First, count occurrences using a HashMap.
+Convert counts to an array, sort it, and check for duplicates in the sorted array.
+Approach:
+
+Count occurrences of each number.
+Extract the counts, sort them, and check for any consecutive duplicates.
+Complexity:
+
+Time complexity: (O(n \log n)), for sorting the counts.
+Space complexity: (O(n)), for storing counts and sorted results.
+Code:
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
+
+class Solution {
+    public boolean uniqueOccurrences(int[] arr) {
+        // Step 1: Create a HashMap to count occurrences
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+        
+        // Count occurrences of each number
+        for (int num : arr) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        
+        // Step 2: Extract counts and sort them
+        ArrayList<Integer> counts = new ArrayList<>(countMap.values());
+        Collections.sort(counts);
+        
+        // Check for duplicates in the sorted list
+        for (int i = 1; i < counts.size(); i++) {
+            if (counts.get(i).equals(counts.get(i - 1))) {
+                return false; // Count is not unique
+            }
+        }
+        
+        // All counts were unique
+        return true;
+    }
+}
+Summary
+HashMap and HashSet: Efficient and easy to understand. Ideal for most cases with average time complexity of (O(n)).
+Arrays and Basic Iteration: Suitable only if the range of numbers is manageable.
+Sorting and Checking: Another viable method, though less efficient due to sorting.
