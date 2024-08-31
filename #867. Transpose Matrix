@@ -1,0 +1,62 @@
+Method 1: transpose[i][j] = matrix[j][i];
+Intuition
+The transpose of a matrix is obtained by flipping it over its diagonal, switching the row and column indices of the matrix. This method transposes the matrix by assigning the element at position (j, i) in the original matrix to the position (i, j) in the transposed matrix.
+
+Approach
+Identify the number of rows and columns in the original matrix.
+Create a new matrix transpose with dimensions [cols][rows], since the transpose of an m x n matrix is an n x m matrix.
+Use two nested loops:
+The outer loop iterates over the columns of the original matrix.
+The inner loop iterates over the rows.
+For each element in the original matrix, assign it to the transposed position in the new matrix.
+Return the transposed matrix.
+Complexity
+Time complexity: O(m * n) where m is the number of rows and n is the number of columns. We need to visit each element of the original matrix once.
+Space complexity: O(m * n) for storing the new transposed matrix.
+Code
+class Solution {
+    public int[][] transpose(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] transpose = new int[cols][rows];
+        
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                transpose[i][j] = matrix[j][i];
+            }
+        }
+        
+        return transpose;
+    }
+}
+Method 2: transpose[j][i] = matrix[i][j];
+Intuition
+This method is another approach to achieve the transpose of a matrix by directly assigning the element at position (i, j) in the original matrix to the position (j, i) in the transposed matrix. The role of i and j is switched compared to the previous method.
+
+Approach
+Determine the number of rows and columns in the original matrix.
+Create a new matrix transpose with dimensions [cols][rows].
+Use two nested loops:
+The outer loop iterates over the rows of the original matrix.
+The inner loop iterates over the columns.
+Assign each element of the original matrix to the transposed position in the new matrix.
+Return the transposed matrix.
+Complexity
+Time complexity: O(m * n) where m is the number of rows and n is the number of columns. The method visits each element in the matrix once.
+Space complexity: O(m * n) for storing the new transposed matrix.
+Code
+class Solution {
+    public int[][] transpose(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] transpose = new int[cols][rows];
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transpose[j][i] = matrix[i][j];
+            }
+        }
+        
+        return transpose;
+    }
+}
