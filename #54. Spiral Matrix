@@ -1,0 +1,46 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) {
+            return result;
+        }
+
+        int minRow = 0, maxRow = matrix.length - 1;
+        int minCol = 0, maxCol = matrix[0].length - 1;
+
+        while (minRow <= maxRow && minCol <= maxCol) {
+            // Traverse from left to right along the top boundary
+            for (int col = minCol; col <= maxCol; col++) {
+                result.add(matrix[minRow][col]);
+            }
+            minRow++;
+
+            // Traverse from top to bottom along the right boundary
+            for (int row = minRow; row <= maxRow; row++) {
+                result.add(matrix[row][maxCol]);
+            }
+            maxCol--;
+
+            // Traverse from right to left along the bottom boundary
+            if (minRow <= maxRow) { // Check to avoid duplicate rows
+                for (int col = maxCol; col >= minCol; col--) {
+                    result.add(matrix[maxRow][col]);
+                }
+                maxRow--;
+            }
+
+            // Traverse from bottom to top along the left boundary
+            if (minCol <= maxCol) { // Check to avoid duplicate columns
+                for (int row = maxRow; row >= minRow; row--) {
+                    result.add(matrix[row][minCol]);
+                }
+                minCol++;
+            }
+        }
+
+        return result;
+    }
+}
