@@ -1,0 +1,66 @@
+class Solution {
+    public int getSize(ListNode head) {
+
+        int ctr = 0;
+        ListNode p = head;
+        while (p != null) {
+            ctr++;
+            p = p.next;
+        }
+        return ctr;
+    }
+
+    public ListNode[] splitListToParts(ListNode head, int k) {
+
+        int n = getSize(head);
+        ListNode arr[] = new ListNode[k];// not n/k;
+
+        if (head == null)
+            return arr;
+
+        if (n / k == 0 && n % k != 0)
+
+        {
+            ListNode ptr = head;
+            int i = 0;
+            while (ptr != null) {
+
+                ListNode prev = ptr;
+                ptr = ptr.next;
+                prev.next = null;
+                arr[i] = prev;
+
+                i++;
+            }
+            return arr;
+
+        }
+
+        // ArrayList<ListNode> al=new ArrayList<>();
+        // n/k;
+        // n%k;
+        ListNode ptr = head;
+
+        for (int i = 1; i <= k; i++) {  // not i<=n/k
+            // al.add(ptr);
+
+            arr[i - 1] = ptr;
+            if (i <= n % k) {
+                for (int j = 1; j < n / k + 1; j++) {
+                    ptr = ptr.next;
+                }
+
+            } else {
+                for (int j = 1; j < n / k; j++) {
+                    ptr = ptr.next;
+                }
+
+            }
+            ListNode prev = ptr;
+            ptr = ptr.next;
+            prev.next = null;
+
+        }
+        return arr;
+    }
+}
