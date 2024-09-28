@@ -1,0 +1,66 @@
+
+class Solution {
+    public static int[] nodesBetweenCriticalPoints(ListNode head) {
+
+        ArrayList<Integer> arr1 = new ArrayList<Integer>();
+
+        int arr[] = new int[2];
+
+        arr[0] = -1;
+        arr[1] = -1;
+
+        if (head == null || head.next == null || head.next.next == null)
+            return arr;
+
+        ListNode curr = head;
+        ListNode PREV = null, NEXT = null;
+        int c = 1;
+        int cr = 0;
+        while (curr.next.next != null) {
+            PREV = curr;
+            curr = curr.next;
+            NEXT = curr.next;
+            c++;
+
+            if (curr.val < PREV.val && curr.val < NEXT.val) {
+                cr++;
+                arr1.add(c);
+            }
+
+            else if (curr.val > PREV.val && curr.val > NEXT.val) {
+                cr++;
+                arr1.add(c);
+            }
+
+            // PREV=PREV.next;
+            // curr=curr.next;
+            // NEXT=NEXT.next;
+
+        }
+
+        // if(cr<2) // OR
+        if (arr1.size() < 2)
+            return arr;
+
+        if (arr1.size() == 2) {
+            arr[0] = arr1.get(1) - arr1.get(0);
+            arr[1] = arr[0];
+
+            return arr;
+        }
+
+        // Collections.sort(arr1); // BCZ ALREADY SORTED
+        int diff = Integer.MAX_VALUE;
+
+        // Find the min diff by comparing adjacent
+        // pairs in sorted array
+        for (int i = 0; i < arr1.size() - 1; i++)
+            if (arr1.get(i + 1) - arr1.get(i) < diff)
+                diff = arr1.get(i + 1) - arr1.get(i);
+
+        arr[0] = diff;
+        arr[1] = arr1.get(arr1.size() - 1) - arr1.get(0);
+
+        return arr;
+    }
+}
