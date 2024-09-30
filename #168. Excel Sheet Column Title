@@ -1,0 +1,25 @@
+class Solution {
+    public String convertToTitle(int columnNumber) {
+        char arr[] = new char[27];
+
+        // Filling the array with characters A to Z
+        for (int i = 1; i <= 26; i++) {
+            arr[i] = (char) (64 + i);
+        }
+
+        String ans = "";
+        while (columnNumber > 0) {
+            int rem = columnNumber % 26;
+
+            if (rem == 0) {
+                ans = "Z" + ans;
+                columnNumber = (columnNumber - 1) / 26; // Decrease by 1 for zero remainder
+            } else {
+                ans = arr[rem] + ans;
+                columnNumber = columnNumber / 26;
+            }
+        }
+
+        return ans;
+    }
+}
