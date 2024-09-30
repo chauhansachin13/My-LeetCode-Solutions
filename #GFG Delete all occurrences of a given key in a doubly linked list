@@ -1,0 +1,31 @@
+class Solution {
+    static Node deleteAllOccurOfX(Node head, int x) {
+        // Create a dummy node
+        Node dummy = new Node(-1);
+        dummy.next = head;
+        if (head != null) {
+            head.prev = dummy; // Set prev of head
+        }
+        
+        Node current = head;
+        Node temp;
+
+        while (current != null) {
+            if (current.data == x) {
+                // Remove current node
+                temp = current; // Store current node
+                if (current.prev != null) {
+                    current.prev.next = current.next; // Link previous node to next node
+                }
+                if (current.next != null) {
+                    current.next.prev = current.prev; // Link next node to previous node
+                }
+                current = current.next; // Move to next node
+            } else {
+                current = current.next; // Move to next node
+            }
+        }
+
+        return dummy.next; // Return the head of the modified list
+    }
+}
