@@ -1,0 +1,61 @@
+class Solution {
+    public int maxMoves(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int maxMoves = 0;
+
+        // Memoization table to store the maximum moves from each cell
+        int[][] memo = new int[rows][cols];
+        
+        // Initialize all values in memo to -1, indicating uncomputed cells
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                memo[i][j] = -1;
+            }
+        }
+
+        // Start from each cell in the leftmost column and calculate max moves
+        for (int i = 0; i < rows; i++) {
+            maxMoves = Math.max(maxMoves, maxMovesHelper(grid, i, 0, memo));
+        }
+
+        return maxMoves;
+    }
+
+    private int maxMovesHelper(int[][] grid, int row, int col, int[][] memo) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        // Base case: if we reach the last column, no further moves can be made
+        if (col == cols - 1) {
+            return 0;
+        }
+
+        // If already computed, return the stored result
+        if (memo[row][col] != -1) {
+            return memo[row][col];
+        }
+
+        // Initialize moves for each possible direction
+        int a = 0, b = 0, c = 0;
+
+        // Move to the right
+        if (grid[row][col + 1] > grid[row][col]) {
+            a = 1 + maxMovesHelper(grid, row, col + 1, memo);
+        }
+
+        // Move to the top-right
+        if (row - 1 >= 0 && grid[row - 1][col + 1] > grid[row][col]) {
+            b = 1 + maxMovesHelper(grid, row - 1, col + 1, memo);
+        }
+
+        // Move to the bottom-right
+        if (row + 1 < rows &&  grid[row + 1][col + 1] > grid[row][col]) {
+            c = 1 + maxMovesHelper(grid, row + 1, col + 1, memo);
+        }
+
+        // Store the result in memo to avoid recomputation
+        memo[row][col] = Math.max(a, Math.max(b, c));
+        return memo[row][col];
+    }
+}
